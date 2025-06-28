@@ -1,8 +1,9 @@
 ```markdown
+```
 # 💻 Tugas Besar Basis Data – Aplikasi Kasir Toko Gadget
 
 Aplikasi Point of Sale (POS) berbasis web untuk mengelola transaksi penjualan, manajemen produk, pelanggan, karyawan, dan laporan secara lengkap di Toko Gadget. Proyek ini dikembangkan dalam rangka memenuhi tugas besar mata kuliah Basis Data.
-
+```
 ---
 
 ## 🎯 Fitur Utama

@@ -7,6 +7,9 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
+$current_page = 'dashboard'; // untuk navbar aktif
+include 'navbar.php'; // navbar modular
+
 // Koneksi database dengan error handling
 $pdo = null;
 $database_error = false;
@@ -52,7 +55,6 @@ if (!$database_error && $pdo !== null) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,101 +66,69 @@ if (!$database_error && $pdo !== null) {
             box-sizing: border-box;
         }
         body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #333;
         }
-        .navbar {
-            background: #333;
-            padding: 10px 0;
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        .logo {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .nav-menu {
-            display: flex;
-            list-style: none;
-        }
-        .nav-menu li {
-            margin-left: 30px;
-        }
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .nav-menu a:hover {
-            background: #555;
-        }
-        .nav-menu a.active {
-            background: #555;
-        }
+
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 40px auto;
-            padding: 20px;
+            padding: 25px;
             background: white;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
         }
+
         h2 {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            color: #001F3F;
         }
-        hr {
+
+        .stats {
+            display: flex;
+            gap: 30px;
             margin: 20px 0;
         }
+        .stat-box {
+            flex: 1;
+            background: #f1f6fb;
+            padding: 20px;
+            border-left: 5px solid #001F3F;
+            border-radius: 5px;
+        }
+        .stat-box h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-        }
-        table, th, td {
-            border: 1px solid #aaa;
+            margin-top: 20px;
         }
         th, td {
-            padding: 8px;
-            text-align: left;
+            padding: 10px;
+            border: 1px solid #ccc;
         }
+        th {
+            background: #001F3F;
+            color: white;
+        }
+
         .error-message {
-            color: red;
-            background: #ffebee;
+            color: #721c24;
+            background: #f8d7da;
             padding: 10px;
             border-radius: 5px;
-            margin: 10px 0;
+            margin: 15px 0;
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="../index.php" class="logo">TOKAGADGET</a>
-        <ul class="nav-menu">
-            <li><a href="index.php">Dashboard</a></li>
-            <li><a href="produk.php">Produk</a></li>
-            <li><a href="kategori.php">Kategori</a></li>
-            <li><a href="transaksi.php">Transaksi</a></li>
-            <li><a href="karyawan.php">Karyawan</a></li>
-            <li><a href="pembayaran.php">Rekening</a></li>
-            <li><a href="../logout.php" onclick="return confirm('Keluar dari admin?')">Logout</a></li>
-        </ul>
-    </div>
-</nav>
-
-
 <div class="container">
-    <h2>Dashboard Admin TOKAGADGET</h2>
+    <h2>Dashboard Admin TOKOGADGET</h2>
     <p>Selamat datang, <strong><?php echo htmlspecialchars($_SESSION['admin']); ?></strong>!</p>
 
     <hr>

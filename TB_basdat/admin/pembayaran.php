@@ -6,7 +6,9 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 
+$current_page = 'rekening'; // untuk navbar active
 require_once '../config/database.php';
+include 'navbar.php';
 
 $message = '';
 $edit_data = null;
@@ -58,213 +60,105 @@ try {
     $message = "Error mengambil data: " . $e->getMessage();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Rekening - Admin</title>
     <style>
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
-            line-height: 1.6;
-        }
-        
-        .navbar {
-            background: #333;
-            padding: 10px 0;
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        
-        .logo {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-menu li {
-            margin-left: 30px;
-        }
-        
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            background: #555;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f4f7fa; }
+
         .container {
             max-width: 1000px;
             margin: 40px auto;
             padding: 20px;
             background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
             border-radius: 8px;
         }
-        
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        .message {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .form-container {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #333;
-        }
-        
-        input[type="text"] {
+
+        input, select, button {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
-        }
-        
+
         .btn {
-            background: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
             cursor: pointer;
-            text-decoration: none;
+            text-align: center;
             display: inline-block;
-            margin-right: 10px;
-            font-size: 14px;
-            transition: background 0.3s;
+            border: none;
+            margin-right: 5px;
+            width: 75px;
         }
-        
-        .btn:hover {
-            background: #0056b3;
+
+        .btn-primary { background-color: #0b1f40; color: white; }
+        .btn-primary:hover { background-color: #1d3557; }
+
+        .btn-danger { background-color: #c0392b; color: white; }
+        .btn-danger:hover { background-color: #a93226; }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            background: #e0f7e9;
+            border-left: 5px solid #2ecc71;
+            color: #2d6a4f;
         }
-        
-        .btn-secondary {
-            background: #6c757d;
-        }
-        
-        .btn-secondary:hover {
-            background: #545b62;
-        }
-        
-        .table-container {
-            overflow-x: auto;
-        }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 25px;
         }
-        
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
+
+        table, th, td { border: 1px solid #ccc; }
+
         th {
-            background: #007bff;
+            background-color: #0b1f40;
             color: white;
-            font-weight: bold;
+            text-align: center;
         }
-        
-        tr:hover {
-            background: #f5f5f5;
+
+        td {
+            padding: 10px;
+            text-align: center;
         }
-        
-        .action-links a {
-            color: #007bff;
-            text-decoration: none;
-            margin-right: 10px;
-            font-size: 14px;
-        }
-        
-        .action-links a:hover {
-            text-decoration: underline;
-        }
-        
-        .action-links .delete {
-            color: #dc3545;
-        }
-        
+
         .empty-state {
             text-align: center;
-            padding: 40px;
-            color: #666;
+            color: #888;
+        }
+
+        .action-links a {
+            text-decoration: none;
+            margin: 0 5px;
+            color: #0b1f40;
+        }
+
+        .action-links a.delete {
+            color: #c0392b;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-container, .table-container {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="../index.php" class="logo">TOKAGADGET</a>
-        <ul class="nav-menu">
-            <li><a href="index.php">Dashboard</a></li>
-            <li><a href="produk.php">Produk</a></li>
-            <li><a href="kategori.php">Kategori</a></li>
-            <li><a href="transaksi.php">Transaksi</a></li>
-            <li><a href="karyawan.php">Karyawan</a></li>
-            <li><a href="pembayaran.php" class="active">Rekening</a></li>
-            <li><a href="../logout.php" onclick="return confirm('Keluar dari admin?')">Logout</a></li>
-        </ul>
-    </div>
-</nav>
 
 <div class="container">
     <h2><?php echo $edit_data ? 'Edit Rekening Pembayaran' : 'Manajemen Rekening Pembayaran'; ?></h2>
@@ -301,10 +195,10 @@ try {
             </div>
             
             <?php if ($edit_data): ?>
-                <button type="submit" name="edit" class="btn">Update</button>
-                <a href="pembayaran.php" class="btn btn-secondary">Batal</a>
+                <button type="submit" name="edit" class="btn btn-primary">Update</button>
+                <a href="pembayaran.php" class="btn btn-danger">Batal</a>
             <?php else: ?>
-                <button type="submit" name="tambah" class="btn">Tambah</button>
+                <button type="submit" name="tambah" class="btn btn-primary">Tambah</button>
             <?php endif; ?>
         </form>
     </div>

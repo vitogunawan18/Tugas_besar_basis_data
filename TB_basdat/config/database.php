@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db   = "tokagadget_db";
+$db   = "tokogadget_db";
 
 try {
     // PDO connection for admin dashboard

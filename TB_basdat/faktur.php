@@ -14,10 +14,12 @@ $id_kasir = $faktur['kasir'];
 $kasir_data = mysqli_query($conn, "SELECT nama_karyawan FROM karyawan WHERE id_karyawan = $id_kasir");
 $kasir = mysqli_fetch_assoc($kasir_data)['nama_karyawan'] ?? 'Kasir Tidak Dikenal';
 
-// Ambil rekening jika metode pembayaran bukan tunai
+// Ambil rekening berdasarkan metode pembayaran yang dipilih
 $rekeningList = [];
 if (strtolower($faktur['metode_pembayaran']) != 'tunai') {
-    $rekening_data = mysqli_query($conn, "SELECT * FROM rekening_pembayaran");
+    // Filter rekening berdasarkan metode pembayaran yang dipilih
+    $metode_pembayaran = strtolower($faktur['metode_pembayaran']);
+    $rekening_data = mysqli_query($conn, "SELECT * FROM rekening_pembayaran WHERE LOWER(bank) = '$metode_pembayaran'");
     while ($r = mysqli_fetch_assoc($rekening_data)) {
         $rekeningList[] = $r;
     }
@@ -114,22 +116,69 @@ $tanggal = date('d F Y');
             font-style: italic;
         }
 
-        .back-button {
+        .button-container {
             margin-top: 30px;
             text-align: center;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        .back-button a {
+        .btn {
             text-decoration: none;
-            background: #007bff;
-            color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 6px;
             font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 160px;
+            justify-content: center;
         }
 
-        .back-button a:hover {
+        .btn-print {
+            background: #28a745;
+            color: white;
+            border: 2px solid #28a745;
+        }
+
+        .btn-print:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-back {
+            background: #007bff;
+            color: white;
+            border: 2px solid #007bff;
+        }
+
+        .btn-back:hover {
             background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        @media print {
+            .button-container {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
         }
     </style>
 </head>
@@ -196,8 +245,13 @@ $tanggal = date('d F Y');
     Kasir: <?= htmlspecialchars($kasir); ?>
 </div>
 
-<div class="back-button">
-    <a href="kasir_dashboard.php">Kembali ke Dashboard Kasir</a>
+<div class="button-container">
+    <a href="javascript:void(0)" onclick="window.print()" class="btn btn-print">
+        🖨️ Cetak Struk
+    </a>
+    <a href="kasir_dashboard.php" class="btn btn-back">
+        ← Kembali ke Dashboard
+    </a>
 </div>
 
 </body>

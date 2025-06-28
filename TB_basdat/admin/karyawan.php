@@ -3,7 +3,10 @@ session_start();
 require_once '../config/database.php';
 require_once '../functions.php';
 
-check_login();
+check_login(); // pastikan admin login
+
+$current_page = 'karyawan'; // tandai navbar aktif
+include 'navbar.php';
 
 // Handle form aksi
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -45,119 +48,64 @@ $karyawan_result = $pdo->query("SELECT * FROM karyawan")->fetchAll();
 <head>
     <title>Kelola Karyawan</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; }
-        .navbar {
-            background: #333;
-            padding: 10px 0;
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        .logo {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .nav-menu {
-            display: flex;
-            list-style: none;
-        }
-        .nav-menu li {
-            margin-left: 30px;
-        }
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .nav-menu a:hover {
-            background: #555;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f4f7fa; }
 
         .container {
             max-width: 1000px;
             margin: 40px auto;
             padding: 20px;
             background: white;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
         }
 
         input, select, button {
             width: 100%;
             padding: 10px;
             margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         .btn {
             padding: 8px 12px;
-            border-radius: 3px;
+            border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
             text-align: center;
             display: inline-block;
             border: none;
             margin-right: 5px;
-            width: 75px; /* Samakan ukuran tombol */
+            width: 75px;
         }
 
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
+        .btn-primary { background-color: #0b1f40; color: white; }
+        .btn-primary:hover { background-color: #1d3557; }
 
-        .btn-danger {
-            background-color: #dc3545;
-            color: white;
-        }
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
+        .btn-danger { background-color: #c0392b; color: white; }
+        .btn-danger:hover { background-color: #a93226; }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 25px;
         }
-        table, th, td {
-            border: 1px solid #aaa;
+        table, th, td { border: 1px solid #ccc; }
+        th {
+            background-color: #0b1f40;
+            color: white;
+            text-align: center;
         }
-        th, td {
+        td {
             padding: 10px;
-            text-align: left;
+            text-align: center;
         }
 
-        .inline {
-            display: inline-block;
-        }
+        .inline { display: inline-block; }
     </style>
 </head>
 <body>
-
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="../index.php" class="logo">TOKAGADGET</a>
-        <ul class="nav-menu">
-            <li><a href="index.php">Dashboard</a></li>
-            <li><a href="produk.php">Produk</a></li>
-            <li><a href="kategori.php">Kategori</a></li>
-            <li><a href="transaksi.php">Transaksi</a></li>
-            <li><a href="karyawan.php">Karyawan</a></li>
-            <li><a href="pembayaran.php">Rekening</a></li>
-            <li><a href="../logout.php" onclick="return confirm('Keluar dari admin?')">Logout</a></li>
-        </ul>
-    </div>
-</nav>
 
 <div class="container">
     <h2><?= $edit_data ? 'Edit Karyawan' : 'Tambah Karyawan' ?></h2>

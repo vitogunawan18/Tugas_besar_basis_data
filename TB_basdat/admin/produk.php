@@ -5,6 +5,9 @@ require_once '../functions.php';
 
 check_login();
 
+$current_page = 'produk'; // Untuk tandai menu aktif
+include 'navbar.php';
+
 // Handle form: tambah/edit/hapus
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
@@ -13,16 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $harga = $_POST['harga'];
     $stok = $_POST['stok'];
 
-    // DEBUG: Tampilkan data POST
-    // Hapus ini jika sudah tidak dibutuhkan
-    // echo "<pre>"; print_r($_POST); echo "</pre>";
-
     if ($action === 'add') {
         $stmt = $pdo->prepare("INSERT INTO produk (nama_produk, id_kategori, harga, stok) VALUES (?, ?, ?, ?)");
         $stmt->execute([$nama, $id_kat, $harga, $stok]);
         header("Location: produk.php");
         exit;
-
     } elseif ($action === 'edit') {
         $id = $_POST['id_produk'];
         $stmt = $pdo->prepare("UPDATE produk SET nama_produk = ?, id_kategori = ?, harga = ?, stok = ? WHERE id_produk = ?");
@@ -38,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         header("Location: produk.php");
         exit;
-
     } elseif ($action === 'delete') {
         $id = $_POST['id_produk'];
         $stmt = $pdo->prepare("DELETE FROM produk WHERE id_produk = ?");
@@ -65,54 +62,34 @@ $produk_result = $pdo->query("
 
 $kategori_result = $pdo->query("SELECT * FROM kategori_produk")->fetchAll();
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Kelola Produk</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f9f9f9; }
-        .navbar { background: #333; padding: 10px 0; }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        .logo {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .nav-menu { display: flex; list-style: none; }
-        .nav-menu li { margin-left: 30px; }
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .nav-menu a:hover { background: #555; }
+        body { font-family: Arial, sans-serif; background: #f4f7fa; }
+
         .container {
             max-width: 1000px;
             margin: 40px auto;
             padding: 20px;
             background: white;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
         }
+
         input, select, button {
             width: 100%;
             padding: 10px;
             margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
+
         .btn {
             padding: 8px 12px;
-            border-radius: 3px;
+            border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
             text-align: center;
@@ -121,36 +98,33 @@ $kategori_result = $pdo->query("SELECT * FROM kategori_produk")->fetchAll();
             margin-right: 5px;
             width: 75px;
         }
-        .btn-primary { background-color: #007bff; color: white; }
-        .btn-primary:hover { background-color: #0056b3; }
-        .btn-danger { background-color: #dc3545; color: white; }
-        .btn-danger:hover { background-color: #c82333; }
+
+        .btn-primary { background-color: #0b1f40; color: white; }
+        .btn-primary:hover { background-color: #1d3557; }
+
+        .btn-danger { background-color: #c0392b; color: white; }
+        .btn-danger:hover { background-color: #a93226; }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 25px;
         }
-        table, th, td { border: 1px solid #aaa; }
-        th, td { padding: 10px; text-align: left; }
+        table, th, td { border: 1px solid #ccc; }
+        th {
+            background-color: #0b1f40;
+            color: white;
+            text-align: center;
+        }
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
         .inline { display: inline-block; }
     </style>
 </head>
 <body>
-
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="../index.php" class="logo">TOKAGADGET</a>
-        <ul class="nav-menu">
-            <li><a href="index.php">Dashboard</a></li>
-            <li><a href="produk.php">Produk</a></li>
-            <li><a href="kategori.php">Kategori</a></li>
-            <li><a href="transaksi.php">Transaksi</a></li>
-            <li><a href="karyawan.php">Karyawan</a></li>
-            <li><a href="pembayaran.php">Rekening</a></li>
-            <li><a href="../logout.php" onclick="return confirm('Keluar dari admin?')">Logout</a></li>
-        </ul>
-    </div>
-</nav>
 
 <div class="container">
     <h2 style="margin-bottom: 20px;"><?= $edit_data ? 'Edit Produk' : 'Tambah Produk'; ?></h2>

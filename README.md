@@ -146,11 +146,14 @@ logout.php                    # Logout user
 
 ## 👨‍💻 Anggota Kelompok
 
-| Nama                 | NIM      |
-| -------------------- | -------- |
-| **Vito Gunawan**     | 2306149 |
-| **Salma Aulia Nisa** | 2306143  |
-| **Siti Rahmawati**   | 2306146  |
+| Nama                   | NIM      |
+|------------------------|----------|
+| **Vito Gunawan**       | 2306149  |
+| **Salma Aulia Nisa**   | 2306143  |
+| **Siti Rahmawati**     | 2306146  |
+| **Agna Fadia**         | 2306145  |
+| **Fadhlian Nur Fajri** | 2306147  |
+| **Rifki Ahmad Dzulfikri** | 2306144  |
 
 ---
 

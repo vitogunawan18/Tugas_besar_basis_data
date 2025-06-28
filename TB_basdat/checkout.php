@@ -386,12 +386,12 @@ foreach ($_SESSION['cart'] as $id => $qty) {
                     <?php if (!empty($rekening_list)): ?>
                         <?php foreach ($rekening_list as $rekening): ?>
                             <div class="payment-option bank-<?= strtolower($rekening['bank']); ?>">
-                                <input type="radio" name="metode_pembayaran" value="<?= htmlspecialchars($rekening['bank']); ?>" data-rekening="<?= $rekening['id_rekening']; ?>" required>
+                                <input type="radio" name="id_rekening" value="<?= (int)$rekening['id_rekening']; ?>" required>
                                 <div class="payment-header">
                                     <div class="payment-icon">
                                         <i class="fas fa-university"></i>
                                     </div>
-                                    <div class="payment-name">Transfer <?= htmlspecialchars($rekening['bank']); ?></div>
+                                    <div class="payment-name"><?= htmlspecialchars($rekening['bank']); ?></div>
                                 </div>
                                 <div class="payment-details">
                                     <?= htmlspecialchars($rekening['nama_penerima']); ?> - <?= htmlspecialchars($rekening['no_rekening']); ?>
@@ -399,33 +399,8 @@ foreach ($_SESSION['cart'] as $id => $qty) {
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                    
-                    <div class="payment-option bank-qris">
-                        <input type="radio" name="metode_pembayaran" value="QRIS" data-rekening="0">
-                        <div class="payment-header">
-                            <div class="payment-icon">
-                                <i class="fas fa-qrcode"></i>
-                            </div>
-                            <div class="payment-name">QRIS</div>
-                        </div>
-                        <div class="payment-details">Pembayaran melalui QR Code</div>
-                    </div>
-                    
-                    <div class="payment-option bank-tunai">
-                        <input type="radio" name="metode_pembayaran" value="Tunai" data-rekening="0">
-                        <div class="payment-header">
-                            <div class="payment-icon">
-                                <i class="fas fa-money-bill-wave"></i>
-                            </div>
-                            <div class="payment-name">Tunai</div>
-                        </div>
-                        <div class="payment-details">Pembayaran secara tunai</div>
-                    </div>
                 </div>
             </div>
-
-            <!-- Hidden input untuk menyimpan ID rekening yang dipilih -->
-            <input type="hidden" name="id_rekening" id="id_rekening" value="">
 
             <div class="button-group">
                 <button type="submit" class="btn btn-primary">
@@ -442,8 +417,6 @@ foreach ($_SESSION['cart'] as $id => $qty) {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const paymentOptions = document.querySelectorAll('.payment-option');
-    const paymentRadios = document.querySelectorAll('input[name="metode_pembayaran"]');
-    const idRekeningInput = document.getElementById('id_rekening');
     
     // Handle payment option selection
     paymentOptions.forEach(function(option) {
@@ -457,16 +430,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Add selected class to clicked option
                 this.classList.add('selected');
-                
-                // Update hidden input
-                const rekeningId = radio.getAttribute('data-rekening');
-                idRekeningInput.value = rekeningId;
             }
         });
-    });
-    
-    // Handle radio button change
-    paymentRadios.forEach(function(radio) {
+        
+        // Handle radio button change
+        const radio = option.querySelector('input[type="radio"]');
         radio.addEventListener('change', function() {
             if (this.checked) {
                 // Remove selected class from all options
@@ -474,10 +442,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Add selected class to parent option
                 this.closest('.payment-option').classList.add('selected');
-                
-                // Update hidden input
-                const rekeningId = this.getAttribute('data-rekening');
-                idRekeningInput.value = rekeningId;
             }
         });
     });

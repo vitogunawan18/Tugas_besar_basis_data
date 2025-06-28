@@ -1,4 +1,4 @@
-c:\xampp\htdocs\TB_basdat\admin c:\xampp\htdocs\TB_basdat\admin\index.php c:\xampp\htdocs\TB_basdat\admin\karyawan.php c:\xampp\htdocs\TB_basdat\admin\kategori.php c:\xampp\htdocs\TB_basdat\admin\laporan.php c:\xampp\htdocs\TB_basdat\admin\login.php c:\xampp\htdocs\TB_basdat\admin\navbar.php c:\xampp\htdocs\TB_basdat\admin\pembayaran.php c:\xampp\htdocs\TB_basdat\admin\produk.php c:\xampp\htdocs\TB_basdat\admin\transaksi.php c:\xampp\htdocs\TB_basdat\config c:\xampp\htdocs\TB_basdat\config\database.php c:\xampp\htdocs\TB_basdat\template c:\xampp\htdocs\TB_basdat\template\footer.php c:\xampp\htdocs\TB_basdat\template\header.php c:\xampp\htdocs\TB_basdat\checkout_success.php c:\xampp\htdocs\TB_basdat\checkout.php c:\xampp\htdocs\TB_basdat\detail_produk.php c:\xampp\htdocs\TB_basdat\faktur.php c:\xampp\htdocs\TB_basdat\functions.php c:\xampp\htdocs\TB_basdat\index.php c:\xampp\htdocs\TB_basdat\kasir_dashboard.php c:\xampp\htdocs\TB_basdat\kebijakan.php c:\xampp\htdocs\TB_basdat\kontak.php c:\xampp\htdocs\TB_basdat\login_admin.php c:\xampp\htdocs\TB_basdat\logout.php c:\xampp\htdocs\TB_basdat\proses_checkout.php c:\xampp\htdocs\TB_basdat\proses_login_kasir.phpc:\xampp\htdocs\TB_basdat\admin c:\xampp\htdocs\TB_basdat\admin\index.php c:\xampp\htdocs\TB_basdat\admin\karyawan.php c:\xampp\htdocs\TB_basdat\admin\kategori.php c:\xampp\htdocs\TB_basdat\admin\laporan.php c:\xampp\htdocs\TB_basdat\admin\login.php c:\xampp\htdocs\TB_basdat\admin\navbar.php c:\xampp\htdocs\TB_basdat\admin\pembayaran.php c:\xampp\htdocs\TB_basdat\admin\produk.php c:\xampp\htdocs\TB_basdat\admin\transaksi.php c:\xampp\htdocs\TB_basdat\config c:\xampp\htdocs\TB_basdat\config\database.php c:\xampp\htdocs\TB_basdat\template c:\xampp\htdocs\TB_basdat\template\footer.php c:\xampp\htdocs\TB_basdat\template\header.php c:\xampp\htdocs\TB_basdat\checkout_success.php c:\xampp\htdocs\TB_basdat\checkout.php c:\xampp\htdocs\TB_basdat\detail_produk.php c:\xampp\htdocs\TB_basdat\faktur.php c:\xampp\htdocs\TB_basdat\functions.php c:\xampp\htdocs\TB_basdat\index.php c:\xampp\htdocs\TB_basdat\kasir_dashboard.php c:\xampp\htdocs\TB_basdat\kebijakan.php c:\xampp\htdocs\TB_basdat\kontak.php c:\xampp\htdocs\TB_basdat\login_admin.php c:\xampp\htdocs\TB_basdat\logout.php c:\xampp\htdocs\TB_basdat\proses_checkout.php c:\xampp\htdocs\TB_basdat\proses_login_kasir.php<?php
+<?php
 session_start();
 include 'config/database.php';
 
@@ -9,22 +9,30 @@ if (!isset($_SESSION['kasir']) || empty($_SESSION['cart'])) {
 
 $nama_pelanggan = $_POST['nama'] ?? '';
 $telepon = $_POST['telepon'] ?? '';
-$metode_pembayaran = $_POST['metode_pembayaran'] ?? 'Tunai';
+$id_rekening = (int)($_POST['id_rekening'] ?? 0);  // PERBAIKAN: Ambil id_rekening yang benar
 $id_kasir = $_SESSION['kasir'];
 
-if (empty($nama_pelanggan) || empty($telepon) || empty($metode_pembayaran)) {
+if (empty($nama_pelanggan) || empty($telepon) || $id_rekening <= 0) {
     die("Data pelanggan atau metode pembayaran tidak lengkap.");
 }
 
+// Ambil nama bank untuk session faktur
+$queryBank = mysqli_query($conn, "SELECT bank FROM rekening_pembayaran WHERE id_rekening = $id_rekening");
+$dataBank = mysqli_fetch_assoc($queryBank);
+$nama_bank = $dataBank['bank'] ?? 'Unknown';
+
 // Simpan pelanggan
-mysqli_query($conn, "INSERT INTO pelanggan (nama_pelanggan, telepon) VALUES ('$nama_pelanggan', '$telepon')");
+$nama_pelanggan_escaped = mysqli_real_escape_string($conn, $nama_pelanggan);
+$telepon_escaped = mysqli_real_escape_string($conn, $telepon);
+
+mysqli_query($conn, "INSERT INTO pelanggan (nama_pelanggan, telepon) VALUES ('$nama_pelanggan_escaped', '$telepon_escaped')");
 $id_pelanggan = mysqli_insert_id($conn);
 
 // Siapkan data faktur untuk session
 $_SESSION['faktur'] = [
     'nama_pelanggan' => $nama_pelanggan,
     'telepon' => $telepon,
-    'metode_pembayaran' => $metode_pembayaran,
+    'metode_pembayaran' => $nama_bank,  // PERBAIKAN: Gunakan nama bank yang sesuai
     'produk' => [],
     'total' => 0,
     'kasir' => $id_kasir
@@ -53,11 +61,11 @@ foreach ($_SESSION['cart'] as $id_produk => $qty) {
 
         $total_bayar += $subtotal;
 
-        // Simpan transaksi ke DB
+        // PERBAIKAN: Simpan dengan id_rekening yang benar
         mysqli_query($conn, "INSERT INTO transaksi (
             id_toko, id_pelanggan, id_produk, id_rekening, id_karyawan, id_kebijakan, tanggal, banyaknya, total
         ) VALUES (
-            1, $id_pelanggan, $id_produk, 1, $id_kasir, 1, CURDATE(), $qty, $subtotal
+            1, $id_pelanggan, $id_produk, $id_rekening, $id_kasir, 1, CURDATE(), $qty, $subtotal
         )");
 
         // Kurangi stok produk
@@ -73,3 +81,4 @@ unset($_SESSION['cart']);
 // Redirect ke halaman sukses
 header("Location: checkout_success.php");
 exit;
+?>

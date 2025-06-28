@@ -1,4 +1,3 @@
-
 # 💻 Tugas Besar Basis Data – Aplikasi Kasir Toko Gadget
 
 Aplikasi Point of Sale (POS) berbasis web untuk mengelola transaksi penjualan, manajemen produk, pelanggan, karyawan, dan laporan secara lengkap di Toko Gadget. Proyek ini dikembangkan dalam rangka memenuhi tugas besar mata kuliah Basis Data.
@@ -43,26 +42,26 @@ Aplikasi Point of Sale (POS) berbasis web untuk mengelola transaksi penjualan, m
 
 ## 📂 Struktur Folder
 
-```
-
 config/
-database.php               # Koneksi database MySQL
+database.php # Koneksi database MySQL
 template/
-header.php                 # Template header
-footer.php                 # Template footer (jika ada)
-checkout.php                 # Form checkout transaksi
-proses\_checkout.php          # Logic penyimpanan transaksi
-laporan.php                  # Laporan transaksi
-kasir\_dashboard.php          # Dashboard kasir
-produk.php                   # Manajemen produk
-pelanggan.php                # Manajemen pelanggan
-karyawan.php                 # Manajemen karyawan
-rekening\_pembayaran.php      # Manajemen rekening pembayaran
-kebijakan.php                # Manajemen kebijakan refund
-login.php                    # Halaman login
-logout.php                   # Logout user
+header.php # Template header
+footer.php # Template footer
+checkout.php # Form checkout transaksi
+proses_checkout.php # Logic penyimpanan transaksi
+laporan.php # Laporan transaksi
+kasir_dashboard.php # Dashboard kasir
+produk.php # Manajemen produk
+pelanggan.php # Manajemen pelanggan
+karyawan.php # Manajemen karyawan
+rekening_pembayaran.php # Manajemen rekening pembayaran
+kebijakan.php # Manajemen kebijakan refund
+login.php # Halaman login
+logout.php # Logout user
 
-````
+yaml
+Copy
+Edit
 
 ---
 
@@ -71,98 +70,96 @@ logout.php                   # Logout user
 1. **Clone repository**
    ```bash
    git clone https://github.com/vitogunawan18/Tugas_besar_basis_data.git
-````
+Buat database
+Masuk ke MySQL atau phpMyAdmin:
 
-2. **Buat database**
-   Masuk ke MySQL / phpMyAdmin:
+sql
+Copy
+Edit
+CREATE DATABASE tokogadget;
+Import file SQL
 
-   ```sql
-   CREATE DATABASE tokogadget;
-   ```
+Buka phpMyAdmin.
 
-3. **Import file SQL**
+Pilih database tokogadget.
 
-   * Buka phpMyAdmin.
-   * Pilih database `tokogadget`.
-   * Import file `tokogadget_db.sql` yang ada di project.
+Import file tokogadget_db.sql yang ada di project.
 
-4. **Atur koneksi database**
-   Edit file `config/database.php`:
+Atur koneksi database
+Edit file config/database.php:
 
-   ```php
-   $conn = mysqli_connect("localhost", "root", "", "tokogadget");
-   ```
+php
+Copy
+Edit
+$conn = mysqli_connect("localhost", "root", "", "tokogadget");
+Sesuaikan user/password MySQL jika berbeda.
 
-   Sesuaikan user/password MySQL Anda jika berbeda.
+Siapkan server lokal
 
-5. **Siapkan server lokal**
+Letakkan folder di htdocs (XAMPP) atau www (Laragon).
 
-   * Letakkan folder di `htdocs` (XAMPP) atau `www` (Laragon).
-   * Jalankan Apache + MySQL.
-   * Akses:
+Jalankan Apache dan MySQL.
 
-     ```
-     http://localhost/Tugas_besar_basis_data/login.php
-     ```
+Akses:
 
----
+bash
+Copy
+Edit
+http://localhost/Tugas_besar_basis_data/login.php
+💻 Cara Penggunaan
+✨ Login
+Buka halaman login.
 
-## 💻 Cara Penggunaan
+Masukkan akun kasir/admin.
 
-### ✨ Login
+✨ Transaksi Penjualan
+Tambahkan produk ke keranjang.
 
-1. Buka halaman login.
-2. Masukkan akun kasir/admin.
+Klik checkout.
 
-### ✨ Transaksi Penjualan
+Isi nama pelanggan dan nomor telepon.
 
-1. Tambahkan produk ke keranjang.
-2. Klik checkout.
-3. Isi nama pelanggan dan nomor telepon.
-4. Pilih metode pembayaran:
+Pilih metode pembayaran:
 
-   * BCA
-   * BNI
-   * QRIS
-   * Tunai
-5. Konfirmasi pembelian.
+BCA
 
-> ✅ Transaksi akan otomatis disimpan sesuai metode pembayaran yang dipilih.
+BNI
 
-### ✨ Laporan Penjualan
+QRIS
 
-1. Masuk halaman laporan.
-2. Pilih jenis laporan:
+Tunai
 
-   * Penjualan per hari
-   * Produk terlaris
-   * Transaksi per pelanggan
-   * Penjualan per karyawan
-   * Data transaksi lengkap
-3. Filter tanggal atau preset periode.
-4. Klik export untuk mengunduh laporan Excel.
+Konfirmasi pembelian.
 
----
+✅ Transaksi akan otomatis disimpan sesuai metode pembayaran yang dipilih.
 
+✨ Laporan Penjualan
+Masuk halaman laporan.
 
+Pilih jenis laporan:
 
-## 👥 Anggota Kelompok
+Penjualan per hari
 
-| Nama                 | NIM       |
-|----------------------|-----------|
-| **Vito Gunawan**     | 23016149  |
-| **Salma Aulia Nisa** | 2306143   |
-| **Siti Rahmawati**   | 2306146   |
+Produk terlaris
 
----
+Transaksi per pelanggan
 
-## 🌐 Repository
+Penjualan per karyawan
 
-🔗 [GitHub Repository](https://github.com/vitogunawan18/Tugas_besar_basis_data)
----
----
-## ❤️ Lisensi
+Data transaksi lengkap
 
+Filter tanggal atau preset periode.
+
+Klik export untuk mengunduh laporan Excel.
+
+👥 Anggota Kelompok
+Nama	NIM
+Vito Gunawan	23016149
+Salma Aulia Nisa	2306142
+Siti Rahmawati	2306151
+
+🌐 Repository
+🔗 GitHub Repository
+
+❤️ Lisensi
 Proyek ini dibuat untuk keperluan akademik. Silakan modifikasi sesuai kebutuhan tugas.
-
----

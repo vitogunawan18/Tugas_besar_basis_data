@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Jun 2025 pada 04.23
+-- Waktu pembuatan: 28 Jun 2025 pada 08.10
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -18,7 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tokagadget_db`
+-- Database: `tokogadget_db`
+
+CREATE DATABASE IF NOT EXISTS `tokogadget_db`;
+USE `tokogadget_db`;
 --
 
 -- --------------------------------------------------------
@@ -49,16 +52,17 @@ INSERT INTO `admin` (`id`, `username`, `password`) VALUES
 CREATE TABLE `karyawan` (
   `id_karyawan` int(11) NOT NULL,
   `nama_karyawan` varchar(50) DEFAULT NULL,
-  `posisi` varchar(50) DEFAULT NULL
+  `posisi` varchar(50) DEFAULT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `karyawan`
 --
 
-INSERT INTO `karyawan` (`id_karyawan`, `nama_karyawan`, `posisi`) VALUES
-(1, 'Dina', 'Kasir'),
-(2, 'Raka Maulidz', 'Kasir');
+INSERT INTO `karyawan` (`id_karyawan`, `nama_karyawan`, `posisi`, `password`) VALUES
+(1, 'Dina', 'Kasir', '11111'),
+(2, 'Raka Maulidz', 'Kasir', '22222');
 
 -- --------------------------------------------------------
 
@@ -132,7 +136,10 @@ INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `telepon`) VALUES
 (13, 'alex', '048234'),
 (14, 'vito', '08989987'),
 (15, 'vito', '08989987'),
-(16, 'cecep', '089776');
+(16, 'cecep', '089776'),
+(17, 'vito', '08989987'),
+(18, 'alex', '08989987'),
+(19, 'alex', '08989987');
 
 -- --------------------------------------------------------
 
@@ -153,8 +160,8 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_kategori`, `harga`, `stok`) VALUES
-(1, 'iPhone 11 64GB', 2, 4400000.00, 5),
-(2, 'iPhone 12 64GB', 2, 7200000.00, 7),
+(1, 'iPhone 11 64GB', 2, 4400000.00, 4),
+(2, 'iPhone 12 64GB', 2, 7200000.00, 5),
 (4, 'iPhone 13 128GB', 3, 8500000.00, 12);
 
 -- --------------------------------------------------------
@@ -196,7 +203,7 @@ CREATE TABLE `toko` (
 --
 
 INSERT INTO `toko` (`id_toko`, `nama_toko`, `telepon`, `email`) VALUES
-(1, 'TOKAGADGET', '+62 896-5009-0645', 'tokagadget@gmail.com');
+(1, 'TOKO GADGET', '+62 896-5009-0645', 'tokogadget@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -237,7 +244,10 @@ INSERT INTO `transaksi` (`id_transaksi`, `id_toko`, `id_pelanggan`, `id_produk`,
 (13, 1, 13, 1, 1, 1, 1, '2025-06-16', 1, 300000.00),
 (14, 1, 14, 1, 1, 1, 1, '2025-06-17', 1, 300000.00),
 (15, 1, 15, 1, 1, 1, 1, '2025-06-17', 1, 300000.00),
-(16, 1, 16, 2, 1, 1, 1, '2025-06-17', 1, 7200000.00);
+(16, 1, 16, 2, 1, 1, 1, '2025-06-17', 1, 7200000.00),
+(17, 1, 17, 1, 1, 1, 1, '2025-06-23', 1, 4400000.00),
+(18, 1, 18, 2, 1, 1, 1, '2025-06-23', 1, 7200000.00),
+(19, 1, 19, 2, 1, 1, 1, '2025-06-23', 1, 7200000.00);
 
 --
 -- Indexes for dumped tables
@@ -337,7 +347,7 @@ ALTER TABLE `kebijakan`
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
@@ -361,7 +371,7 @@ ALTER TABLE `toko`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

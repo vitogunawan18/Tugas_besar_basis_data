@@ -148,7 +148,7 @@ logout.php                    # Logout user
 
 | Nama                 | NIM      |
 | -------------------- | -------- |
-| **Vito Gunawan**     | 23016149 |
+| **Vito Gunawan**     | 2306149 |
 | **Salma Aulia Nisa** | 2306143  |
 | **Siti Rahmawati**   | 2306146  |
 

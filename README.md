@@ -36,30 +36,36 @@ Aplikasi Point of Sale (POS) berbasis web untuk mengelola transaksi penjualan, m
 - Export laporan ke Excel
 ---
 
+Berikut adalah versi yang sudah **diperbaiki dan rapi** untuk bagian **📂 Struktur Folder** di dokumen kamu. Kamu tinggal salin dan tempel ke README atau dokumentasimu:
+
+```markdown
 ## 📂 Struktur Folder
 
 ```
 
 config/
-database.php               # Koneksi database MySQL
+├── database.php              # Koneksi database MySQL
+
 template/
-header.php                 # Template header
-footer.php                 # Template footer (jika ada)
-checkout.php                 # Form checkout transaksi
-proses\_checkout.php          # Logic penyimpanan transaksi
-laporan.php                  # Laporan transaksi
-kasir\_dashboard.php          # Dashboard kasir
-produk.php                   # Manajemen produk
-pelanggan.php                # Manajemen pelanggan
-karyawan.php                 # Manajemen karyawan
-rekening\_pembayaran.php      # Manajemen rekening pembayaran
-kebijakan.php                # Manajemen kebijakan refund
-login.php                    # Halaman login
-logout.php                   # Logout user
+├── header.php                # Template header
+├── footer.php                # Template footer (jika ada)
 
-````
+checkout.php                  # Form checkout transaksi
+proses\_checkout.php           # Logic penyimpanan transaksi
+laporan.php                   # Laporan transaksi
+kasir\_dashboard.php           # Dashboard kasir
 
----
+produk.php                    # Manajemen produk
+pelanggan.php                 # Manajemen pelanggan
+karyawan.php                  # Manajemen karyawan
+rekening\_pembayaran.php       # Manajemen rekening pembayaran
+kebijakan.php                 # Manajemen kebijakan refund
+
+login.php                     # Halaman login
+logout.php                    # Logout user
+
+```
+
 
 ## 🛠️ Instalasi
 

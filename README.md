@@ -158,8 +158,6 @@ logout.php                    # Logout user
 
 🔗 [GitHub Repository](https://github.com/vitogunawan18/Tugas_besar_basis_data)
 
----
-
 ## ❤️ Lisensi
 
 Proyek ini dibuat untuk keperluan akademik. Silakan modifikasi sesuai kebutuhan tugas.

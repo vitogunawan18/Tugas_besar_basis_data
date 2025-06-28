@@ -1,4 +1,3 @@
-
 ```markdown
 # 💻 Tugas Besar Basis Data – Aplikasi Kasir Toko Gadget
 
@@ -35,11 +34,6 @@ Aplikasi Point of Sale (POS) berbasis web untuk mengelola transaksi penjualan, m
 - Penjualan per Karyawan
 - Data Transaksi Lengkap
 - Export laporan ke Excel
-
-✅ **Tampilan Modern**
-- Desain responsif dan profesional
-- UI ramah pengguna
-
 ---
 
 ## 📂 Struktur Folder
@@ -50,7 +44,7 @@ config/
 database.php               # Koneksi database MySQL
 template/
 header.php                 # Template header
-footer.php                 # Template footer
+footer.php                 # Template footer (jika ada)
 checkout.php                 # Form checkout transaksi
 proses\_checkout.php          # Logic penyimpanan transaksi
 laporan.php                  # Laporan transaksi
@@ -75,7 +69,7 @@ logout.php                   # Logout user
 ````
 
 2. **Buat database**
-   Masuk ke MySQL atau phpMyAdmin:
+   Masuk ke MySQL / phpMyAdmin:
 
    ```sql
    CREATE DATABASE tokogadget;
@@ -94,12 +88,12 @@ logout.php                   # Logout user
    $conn = mysqli_connect("localhost", "root", "", "tokogadget");
    ```
 
-   Sesuaikan user/password MySQL jika berbeda.
+   Sesuaikan user/password MySQL Anda jika berbeda.
 
 5. **Siapkan server lokal**
 
    * Letakkan folder di `htdocs` (XAMPP) atau `www` (Laragon).
-   * Jalankan Apache dan MySQL.
+   * Jalankan Apache + MySQL.
    * Akses:
 
      ```
@@ -128,7 +122,7 @@ logout.php                   # Logout user
    * Tunai
 5. Konfirmasi pembelian.
 
-✅ Transaksi akan otomatis disimpan sesuai metode pembayaran yang dipilih.
+> ✅ Transaksi akan otomatis disimpan sesuai metode pembayaran yang dipilih.
 
 ### ✨ Laporan Penjualan
 
@@ -145,13 +139,15 @@ logout.php                   # Logout user
 
 ---
 
-## 👥 Anggota Kelompok
 
-| Nama             | NIM      |
-| ---------------- | -------- |
-| Vito Gunawan     | 23016149 |
-| Salma Aulia Nisa | 2306142  |
-| Siti Rahmawati   | 2306151  |
+
+## 👨‍💻 Anggota Kelompok
+
+| Nama                 | NIM      |
+| -------------------- | -------- |
+| **Vito Gunawan**     | 23016149 |
+| **Salma Aulia Nisa** | 2306143  |
+| **Siti Rahmawati**   | 2306146  |
 
 ---
 
@@ -165,5 +161,4 @@ logout.php                   # Logout user
 
 Proyek ini dibuat untuk keperluan akademik. Silakan modifikasi sesuai kebutuhan tugas.
 
-```
-
+---

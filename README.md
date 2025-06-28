@@ -42,6 +42,8 @@ Berikut adalah versi yang sudah **diperbaiki dan rapi** untuk bagian **📂 Stru
 ## 📂 Struktur Folder
 
 ```
+'''
+```
 
 config/
 ├── database.php              # Koneksi database MySQL
@@ -63,7 +65,7 @@ kebijakan.php                 # Manajemen kebijakan refund
 
 login.php                     # Halaman login
 logout.php                    # Logout user
-
+```
 ```
 
 
